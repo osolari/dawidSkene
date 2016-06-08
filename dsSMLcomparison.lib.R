@@ -12,10 +12,15 @@ fxi <- function(psi, eta, Y){
   return(f)
 }
 
-simResponseData <- function(N = 1000, M = 10, b = .3, accMin = .5, accMax = .8){
+simResponseData <- function(N = 1000, M = 10, b = .3, accMin = .5, accMax = .8, Psi = NA, Eta = NA){
   
-  Psi <- runif( M, min = accMin, max = accMax)
-  Eta <- runif( M, min = accMin, max = accMax)
+  
+  if (length(Psi) == 1 & length(Eta) == 1){
+    Psi <- runif( M, min = accMin, max = accMax)
+    Eta <- runif( M, min = accMin, max = accMax)
+  }
+  
+  
   Y <- rbinom(n = N, size = 1, prob = .5*(1+b))
   
   Fx <- array(data = NA, dim = c(N,M))
