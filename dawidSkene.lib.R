@@ -19,14 +19,18 @@ dataGen <- function(fileAdd = "/Users/darkGene/workspace/repo/dawidSkene/anesthe
 dawidSkeneComp <- function(FX){
   
   I = dim(FX)[1]
-  J = length(unique(as.vector(FX)))
+  J = length(na.omit(unique(as.vector(FX))))
   K = dim(FX)[2]
   
   N <- array(NA, dim = c(I, J, K)) #
   for (i in 1:I){
     for (j in 1:J){
       for (k in 1:K){
-        N[i,j,k] <- sum(FX[i,k]== j-1)
+        if (length(dim(FX)) == 2){
+          N[i,j,k] <- sum(FX[i,k]== j, na.rm = T)
+        }else{
+          N[i,j,k] <- sum(FX[i,k,]== j, na.rm = T)
+        }
       }
     }
   }

@@ -4,9 +4,10 @@ require("ggplot2")
 source("dawidSkene.lib.R")
 
 f <- dataGen()
+
 #f <- f[1:5,1:2,1:2]
 I = dim(f)[1]
-J = sum(!is.na(unique(unlist(apply(X = f, MARGIN = 2, unique)), na.rm = T)))
+J = sum(!is.na(unique(as.vector(f))))  #sum(!is.na(unique(unlist(apply(X = f, MARGIN = 2, unique)), na.rm = T)))
 K = dim(f)[2]
 
 
@@ -15,7 +16,7 @@ N <- array(NA, dim = c(I, J, K)) #
 for (i in 1:I){
   for (j in 1:J){
     for (k in 1:K){
-      N[i,j,k] <- sum(f[i,k,]== j, na.rm = T)
+      N[i,j,k] <- sum(f[i,k]== j, na.rm = T)
     }
   }
 }
@@ -71,4 +72,7 @@ for (iter in 1:40){
   T_ij <- TijNew
 
 }
+
+output <- list("f" = f, "T"= T_ij, "Pi"= PI, "P" = P, "N" = N, "class" = as.integer(T_ij[,2] > .5))
+save(output, file = "~/Dropbox/population_genomics_project_collaboration/pairwise_comparison/parasites.Rdat")
 
